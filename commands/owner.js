@@ -11,6 +11,9 @@ module.exports = {
 *WhatsApp:* +234 701 546 3103
 *Number:* 2347015463103
 
+📱 *Join Our Group:*
+https://chat.whatsapp.com/ByCrWBiCH6z7cRP6PGCd9q
+
 ⛧ *mr dark king dev bot*`;
 
         await sock.sendMessage(msg.key.remoteJid, { 
@@ -35,9 +38,12 @@ module.exports = {
 *WhatsApp:* +234 701 546 3103
 *Number:* 2347015463103
 
-⛧ *mr dark king dev bot*
+📱 *Join Our Group:*
+https://chat.whatsapp.com/ByCrWBiCH6z7cRP6PGCd9q
 
-🔗 GitHub: https://github.com/mrdarkingdev-md/mr-dark-king-md`;
+🔗 GitHub: https://github.com/mrdarkingdev-md/mr-dark-king-md
+
+⛧ *mr dark king dev bot*`;
         
         ctx.reply(ownerText, { parse_mode: "Markdown" });
     }

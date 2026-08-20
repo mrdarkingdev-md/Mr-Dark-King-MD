@@ -1,0 +1,12 @@
+{
+  "name": "mr-dark-king-md",
+  "version": "1.0.0",
+  "description": "WhatsApp bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["whatsapp", "bot", "md"],
+  "author": "mrdarkingdev-md",
+  "license": "MIT"
+}

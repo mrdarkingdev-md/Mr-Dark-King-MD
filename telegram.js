@@ -6,54 +6,117 @@ const menu = require('./commands/menu.js');
 const owner = require('./commands/owner.js');
 const ping = require('./commands/ping.js');
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
-const BOT_NAME = "mr dark king dev bot";
+const BOT_TOKEN = process.env.BOT_TOKEN;
+const BOT_NAME = "MR DARK KING MD";
+const CHANNEL_URL = "https://whatsapp.com/channel/0029Vb8LXbO6LwHkS1PGWV1E";
 
-let botMode = 'private'; // default
+if(!BOT_TOKEN) {
+    console.error('❌ BOT_TOKEN not found in .env');
+    process.exit(1);
+}
 
-// /start command
-bot.start((ctx) => {
-    const welcome = `⛧ *mr dark king dev bot*
-Welcome! Pair your own WhatsApp number to your own private bot instance:
+const bot = new Telegraf(BOT_TOKEN);
 
-1️⃣ /pair 2348012345678 — get a pairing code (with country code, no +)
-2️⃣ WhatsApp → Linked Devices → Link with phone number → enter the code
-3️⃣ /mode public or /mode private — choose who it replies to
-4️⃣ /status any time to check your connection
+// Start command
+bot.start(async (ctx) => {
+    const welcomeText = `
+🎉 *Welcome to ${BOT_NAME}!* 🎉
 
-*private* — only replies to messages from your own WhatsApp number.
-*public* — replies to anyone who messages your bot.`;
+Hi ${ctx.from.first_name || 'there'}! 👋
 
-    ctx.reply(welcome, { parse_mode: "Markdown" });
+✨ This is a multi-platform bot that works on WhatsApp & Telegram
+
+📱 *Available Commands:*
+  /menu - Show all commands
+  /ping - Check bot status
+  /owner - Owner information
+  /channel - Join our WhatsApp channel
+  /help - Get help
+
+🚀 Type /menu to get started!
+`;
+    
+    ctx.reply(welcomeText, { parse_mode: "Markdown" });
 });
 
-// /pair command
-bot.command('pair', (ctx) => {
-    const number = ctx.message.text.split(' ')[1];
-    if(!number) return ctx.reply('Usage: /pair 2348012345678');
-    ctx.reply(`👑 Pair code will be sent to WhatsApp logs.\nNumber: ${number}\nCheck Railway logs for the code.`);
+// Help command
+bot.help(async (ctx) => {
+    const helpText = `
+❓ *Need Help?* ❓
+
+📝 *Command List:*
+
+  /start - Welcome message
+  /menu - Show all available commands
+  /ping - Check if bot is online
+  /status - Bot status
+  /owner - Owner information
+  /channel - Get WhatsApp channel link
+  /help - This help message
+
+💡 *Example Usage:*
+  Simply type: /menu
+
+📞 *Contact Owner:*
+  Use /owner to get owner details
+
+✨ Happy using! 🎉
+`;
+    
+    ctx.reply(helpText, { parse_mode: "Markdown" });
 });
 
-// /mode command
-bot.command('mode', (ctx) => {
-    const mode = ctx.message.text.split(' ')[1];
-    if(mode === 'public' || mode === 'private') {
-        botMode = mode;
-        ctx.reply(`Mode set to: *${mode}*`, { parse_mode: "Markdown" });
-    } else {
-        ctx.reply('Usage: /mode public or /mode private');
+// Menu command
+bot.command('menu', async (ctx) => {
+    await menu.executeTelegram(ctx);
+});
+
+// Ping command
+bot.command('ping', async (ctx) => {
+    await ping.executeTelegram(ctx);
+});
+
+// Owner command
+bot.command('owner', async (ctx) => {
+    await owner.executeTelegram(ctx);
+});
+
+// Channel command
+bot.command('channel', async (ctx) => {
+    const channelText = `📱 *Join Our Channel*\n\n${CHANNEL_URL}\n\nStay updated with latest news and updates!`;
+    ctx.reply(channelText, { parse_mode: "Markdown" });
+});
+
+// Status command
+bot.command('status', async (ctx) => {
+    const statusText = `✅ *Bot Status*\n\n👑 Bot: Online\nPlatform: Telegram\nVersion: 1.0\nOwner: ${process.env.BOT_OWNER || 'Mr Dark King Dev'}`;
+    ctx.reply(statusText, { parse_mode: "Markdown" });
+});
+
+// Echo other messages
+bot.on('text', (ctx) => {
+    ctx.reply('📝 I only respond to commands. Type /menu to see all commands!');
+});
+
+// Error handler
+bot.catch((err, ctx) => {
+    console.error(`❌ Telegram Error for ${ctx.updateType}`, err);
+});
+
+// Launch bot
+const startTelegramBot = async () => {
+    try {
+        console.log(`🤖 ${BOT_NAME} Telegram Bot starting...`);
+        await bot.launch();
+        console.log(`✅ ${BOT_NAME} Telegram Bot is running!`);
+    } catch (error) {
+        console.error('Failed to start Telegram bot:', error);
+        process.exit(1);
     }
-});
+};
 
-// /status command
-bot.command('status', (ctx) => {
-    ctx.reply(`👑 Bot: Online\nMode: ${botMode}\nOwner: Mr Dark King Dev`);
-});
+// Graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
-bot.command('menu', (ctx) => menu.executeTelegram(ctx));
-bot.command('owner', (ctx) => owner.executeTelegram(ctx));
-bot.command('ping', (ctx) => ping.executeTelegram(ctx));
-
-bot.launch();
-console.log(`${BOT_NAME} Telegram Bot is running...`);
-module.exports = { botMode };
+module.exports = { startTelegramBot, bot };

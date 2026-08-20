@@ -1,12 +1,31 @@
 {
   "name": "mr-dark-king-md",
   "version": "1.0.0",
-  "description": "WhatsApp bot",
+  "description": "WhatsApp & Telegram Bot with auto-channel subscription",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "keywords": ["whatsapp", "bot", "md"],
-  "author": "mrdarkingdev-md",
-  "license": "MIT"
+  "keywords": [
+    "whatsapp",
+    "telegram",
+    "bot",
+    "baileys",
+    "multi-platform"
+  ],
+  "author": "Mr Dark King Dev",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.0",
+    "@hapi/boom": "^10.0.1",
+    "dotenv": "^16.3.1",
+    "telegraf": "^4.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }

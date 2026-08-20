@@ -2,38 +2,60 @@ module.exports = {
     name: 'menu',
     // For WhatsApp
     executeWhatsApp: async (sock, msg) => {
-        const menuText = `👑 *MR DARK KING MD* 👑
+        const menuText = `
+╔════════════════════════════════════╗
+║     👑 MR DARK KING MD - MENU 👑   ║
+╚════════════════════════════════════╝
 
-*Available Commands:*
+📱 *AVAILABLE COMMANDS:*
 
-*.menu* - Show this menu
-*.owner* - Owner info
-*.ping* - Check if bot is alive
+🎯 General Commands:
+  • .menu - Show this menu
+  • .ping - Check bot status
+  • .status - Bot connection status
+  • .channel - Join our WhatsApp channel
 
-*Bot Running On:*
-WhatsApp + Telegram
+👤 Account Commands:
+  • .owner - Owner information
+  • .pair <number> - Generate pairing code
 
-Made by Mr Dark`
+💡 *Example:*
+  .pair 2348012345678
+
+📞 *Need Help?*
+Reply to any command or contact owner
+
+✨ *Status:* Bot is Online
+`;
         
-        await sock.sendMessage(msg.key.remoteJid, { 
-            text: menuText
-        });
+        await sock.sendMessage(msg.key.remoteJid, { text: menuText });
     },
 
     // For Telegram  
     executeTelegram: async (ctx) => {
-        const menuText = `👑 *MR DARK KING MD* 👑
+        const menuText = `
+╔════════════════════════════════════╗
+║     👑 MR DARK KING MD - MENU 👑   ║
+╚════════════════════════════════════╝
 
-*Available Commands:*
+📱 *AVAILABLE COMMANDS:*
 
-*/menu* - Show this menu
-*/owner* - Owner info
-*/ping* - Check if bot is alive
+🎯 General Commands:
+  • /menu - Show this menu
+  • /ping - Check bot status
+  • /status - Bot connection status
+  • /channel - Join our WhatsApp channel
 
-*Bot Running On:*
-WhatsApp + Telegram
+👤 Account Commands:
+  • /owner - Owner information
 
-Made by Mr Dark`
+💡 *Features:*
+  • Fast response time
+  • Multi-platform support
+  • Channel management
+
+✨ *Status:* Bot is Online
+`;
         
         ctx.reply(menuText, { parse_mode: "Markdown" });
     }

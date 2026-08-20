@@ -5,11 +5,11 @@ module.exports = {
         const pingText = `🏓 *PONG!*
 
 Bot is alive and running! ✅
-Response Time: Fast`
+Response Time: Fast
+Platform: WhatsApp
+Status: Online`;
         
-        await sock.sendMessage(msg.key.remoteJid, { 
-            text: pingText
-        });
+        await sock.sendMessage(msg.key.remoteJid, { text: pingText });
     },
 
     // For Telegram  
@@ -17,7 +17,9 @@ Response Time: Fast`
         const pingText = `🏓 *PONG!*
 
 Bot is alive and running! ✅
-Response Time: Fast`
+Response Time: Fast
+Platform: Telegram
+Status: Online`;
         
         ctx.reply(pingText, { parse_mode: "Markdown" });
     }

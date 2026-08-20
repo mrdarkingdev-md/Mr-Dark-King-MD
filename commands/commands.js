@@ -4,6 +4,31 @@ module.exports = {
     name: 'commands',
     
     executeWhatsApp: async (sock, msg) => {
+        const userId = msg.key.remoteJid;
+        
+        // Check if user is paired/authenticated
+        // You can modify this based on your database/auth system
+        const isPaired = await checkIfPaired(userId);
+        
+        if (!isPaired) {
+            const restrictedMsg = `❌ *RESTRICTED*
+
+This command is only available after pairing.
+
+📱 *How to Pair:*
+Use command: *.pair <your-number>*
+
+Example: *.pair 2348012345678*
+
+After pairing, you'll have access to all commands!
+
+👤 Need help? Contact owner with .owner`;
+
+            await sock.sendMessage(userId, { text: restrictedMsg });
+            return;
+        }
+
+        // If paired, show full command list
         const commandList = `*╭══ ╳-♡═════════⊷*
 *♡︎•━━━━━ mr Dark king MD ━━━━━━•♡*
 
@@ -227,7 +252,7 @@ module.exports = {
  ▸ .ᴀɴɪᴍᴇ
  ▸ .ᴍᴀɴɢᴀ
  ▸ .ᴄʜᴀʀᴀᴄᴛᴇʀ
- ▸ .ᴡᴇᴀᴛʜᴇʀ
+ ▸ .ᴡ���ᴀᴛʜᴇʀ
  ▸ .ʟʏʀɪᴄs
 ┗━━━━━━━━━━━━━━━━┛
 
@@ -356,10 +381,11 @@ module.exports = {
 
 > Mr dark king ᴍᴅ  · mr dark king dev ᴛᴇᴄʜ`;
 
-        await sock.sendMessage(msg.key.remoteJid, { text: commandList });
+        await sock.sendMessage(userId, { text: commandList });
     },
 
     executeTelegram: async (ctx) => {
+        // Telegram always has full access
         const commandList = `*╭══ ╳-♡═════════⊷*
 *♡︎•━━━━━ mr Dark king MD ━━━━━━•♡*
 
@@ -419,3 +445,19 @@ module.exports = {
         ctx.reply(commandList, { parse_mode: "Markdown" });
     }
 };
+
+// Helper function to check if user is paired
+// Modify this based on your authentication system
+async function checkIfPaired(userId) {
+    try {
+        // Check your database/auth system here
+        // Example: const user = await db.getUser(userId);
+        // return user && user.paired === true;
+        
+        // For now, return false (implement your auth logic)
+        return false;
+    } catch (error) {
+        console.log('Error checking paired status:', error);
+        return false;
+    }
+}

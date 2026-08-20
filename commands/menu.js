@@ -14,6 +14,7 @@ module.exports = {
   • .ping - Check bot status
   • .status - Bot connection status
   • .channel - Join our WhatsApp channel
+  • .group - Join our WhatsApp group
 
 👤 Account Commands:
   • .owner - Owner information
@@ -45,6 +46,7 @@ Reply to any command or contact owner
   • /ping - Check bot status
   • /status - Bot connection status
   • /channel - Join our WhatsApp channel
+  • /group - Join our WhatsApp group
 
 👤 Account Commands:
   • /owner - Owner information
@@ -53,6 +55,7 @@ Reply to any command or contact owner
   • Fast response time
   • Multi-platform support
   • Channel management
+  • Group management
 
 ✨ *Status:* Bot is Online
 `;
